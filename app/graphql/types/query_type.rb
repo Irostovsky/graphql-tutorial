@@ -6,6 +6,7 @@ module Types
     # `all_links` is automatically camelcased to `allLinks`
     field :all_links, [LinkType], null: false
     field :first_link, [LinkType], null: false
+    field :users, [UserType], null: false
 
     # this method is invoked, when `all_link` fields is beeing resolved
     def all_links
@@ -14,6 +15,10 @@ module Types
 
     def first_link
       [Link.first]
+    end
+
+    def users
+      User.all
     end
   end
 end
