@@ -7,4 +7,9 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   has_many :links
+  has_many :votes
+
+  def votes_count
+    votes.count
+  end
 end

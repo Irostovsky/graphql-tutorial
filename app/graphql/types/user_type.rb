@@ -7,5 +7,6 @@ module Types
     # we are exposing `email` just for tutorial purposes
     # in real application shouldn't leak user emails
     field :email, String, null: false
+    field :votes_count, String, null: false, method: :votes_count
   end
 end
