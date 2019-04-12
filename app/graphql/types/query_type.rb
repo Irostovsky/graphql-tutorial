@@ -8,6 +8,7 @@ module Types
     field :first_link, [LinkType], null: false
     field :users, [UserType], null: false
     field :me, UserType, null: true
+    field :my_links, [LinkType], null: false
 
     # this method is invoked, when `all_link` fields is beeing resolved
     def all_links
@@ -23,13 +24,12 @@ module Types
     end
 
     def me
-      token = context[:session][:token]
-      return unless token
+      context[:current_user]
+    end
 
-      crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-      token = crypt.decrypt_and_verify context[:session][:token]
-      user_id = token.gsub('user-id:', '').to_i
-      User.find_by id: user_id
+    def my_links
+      user = context[:current_user]
+      user.links
     end
   end
 end
